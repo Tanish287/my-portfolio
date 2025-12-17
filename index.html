@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tanish Mattoo - Portfolio</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // Icon Components using Font Awesome
+        const Github = () => <i className="fab fa-github"></i>;
+        const Linkedin = () => <i className="fab fa-linkedin"></i>;
+        const Mail = () => <i className="fas fa-envelope"></i>;
+        const MapPin = () => <i className="fas fa-map-marker-alt"></i>;
+        const Code = ({ size }) => <i className="fas fa-code" style={{ fontSize: size }}></i>;
+        const Briefcase = ({ size }) => <i className="fas fa-briefcase" style={{ fontSize: size }}></i>;
+        const GraduationCap = ({ size }) => <i className="fas fa-graduation-cap" style={{ fontSize: size }}></i>;
+        const Menu = ({ size }) => <i className="fas fa-bars" style={{ fontSize: size }}></i>;
+        const X = ({ size }) => <i className="fas fa-times" style={{ fontSize: size }}></i>;
+        const Moon = ({ size }) => <i className="fas fa-moon" style={{ fontSize: size }}></i>;
+        const Sun = ({ size }) => <i className="fas fa-sun" style={{ fontSize: size }}></i>;
+
+        function Portfolio() {
+          const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+          const [darkMode, setDarkMode] = useState(false);
+
+          const scrollToSection = (id) => {
+            const element = document.getElementById(id);
+            element?.scrollIntoView({ behavior: 'smooth' });
+            setMobileMenuOpen(false);
+          };
+
+          return (
+            <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900' : 'bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50'}`}>
+              {/* Navigation */}
+              <nav className={`shadow-lg fixed w-full top-0 z-50 backdrop-blur-md transition-colors duration-300 ${darkMode ? 'bg-slate-900/90 border-b border-slate-700' : 'bg-white/80 border-b border-slate-200'}`}>
+                <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                  <div className="flex justify-between items-center h-16">
+                    <div className={`text-2xl font-bold bg-gradient-to-r ${darkMode ? 'from-blue-400 to-purple-400' : 'from-blue-600 to-purple-600'} bg-clip-text text-transparent`}>TM</div>
+                    
+                    {/* Desktop Menu */}
+                    <div className="hidden md:flex space-x-8 items-center">
+                      {['About', 'Skills', 'Projects', 'Education', 'Experience'].map((item) => (
+                        <button
+                          key={item}
+                          onClick={() => scrollToSection(item.toLowerCase())}
+                          className={`transition-all font-medium relative group ${darkMode ? 'text-slate-300 hover:text-blue-400' : 'text-slate-600 hover:text-blue-600'}`}
+                        >
+                          {item}
+                          <span className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r ${darkMode ? 'from-blue-400 to-purple-400' : 'from-blue-600 to-purple-600'} transition-all group-hover:w-full`}></span>
+                        </button>
+                      ))}
+                      <button
+                        onClick={() => setDarkMode(!darkMode)}
+                        className={`p-2 rounded-lg transition-all ${darkMode ? 'bg-slate-800 text-yellow-400 hover:bg-slate-700' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}
+                        aria-label="Toggle dark mode"
+                      >
+                        {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+                      </button>
+                    </div>
+
+                    {/* Mobile Menu Button */}
+                    <div className="md:hidden flex items-center gap-2">
+                      <button
+                        onClick={() => setDarkMode(!darkMode)}
+                        className={`p-2 rounded-lg transition-all ${darkMode ? 'bg-slate-800 text-yellow-400' : 'bg-slate-100 text-slate-700'}`}
+                      >
+                        {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+                      </button>
+                      <button
+                        className={darkMode ? 'text-slate-300' : 'text-slate-600'}
+                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                      >
+                        {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Mobile Menu */}
+                  {mobileMenuOpen && (
+                    <div className="md:hidden pb-4">
+                      {['About', 'Skills', 'Projects', 'Education', 'Experience'].map((item) => (
+                        <button
+                          key={item}
+                          onClick={() => scrollToSection(item.toLowerCase())}
+                          className={`block w-full text-left py-2 transition-colors ${darkMode ? 'text-slate-300 hover:text-blue-400' : 'text-slate-600 hover:text-blue-600'}`}
+                        >
+                          {item}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </nav>
+
+              {/* Hero Section */}
+              <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+                <div className="absolute inset-0 overflow-hidden">
+                  <div className={`absolute -top-1/2 -right-1/2 w-96 h-96 rounded-full blur-3xl opacity-20 ${darkMode ? 'bg-blue-500' : 'bg-purple-300'}`}></div>
+                  <div className={`absolute -bottom-1/2 -left-1/2 w-96 h-96 rounded-full blur-3xl opacity-20 ${darkMode ? 'bg-purple-500' : 'bg-blue-300'}`}></div>
+                </div>
+                <div className="max-w-6xl mx-auto relative">
+                  <div className="text-center">
+                    <div className="mb-6 inline-block">
+                      <div className={`w-32 h-32 rounded-full bg-gradient-to-br ${darkMode ? 'from-blue-500 to-purple-600' : 'from-blue-400 to-purple-500'} flex items-center justify-center text-white text-5xl font-bold shadow-2xl mx-auto animate-pulse`}>
+                        TM
+                      </div>
+                    </div>
+                    <h1 className={`text-5xl sm:text-7xl font-extrabold mb-4 bg-gradient-to-r ${darkMode ? 'from-blue-400 via-purple-400 to-pink-400' : 'from-blue-600 via-purple-600 to-pink-600'} bg-clip-text text-transparent`}>
+                      Tanish Mattoo
+                    </h1>
+                    <p className={`text-2xl sm:text-3xl font-semibold mb-6 bg-gradient-to-r ${darkMode ? 'from-blue-400 to-purple-400' : 'from-blue-600 to-purple-600'} bg-clip-text text-transparent`}>
+                      Aspiring Software Engineer
+                    </p>
+                    <p className={`text-lg max-w-3xl mx-auto mb-8 leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
+                      Computer Science Engineering student with a strong interest in software development and data-driven applications. 
+                      I've developed and deployed multiple projects using React, Firebase, Python, and SQL. 
+                      I'm focused on improving my problem-solving skills through real projects, not shortcuts.
+                    </p>
+                    
+                    {/* Contact Links */}
+                    <div className="flex flex-wrap justify-center gap-4 mb-8">
+                      <a
+                        href="mailto:tanishmattoo7@gmail.com"
+                        className={`flex items-center gap-2 px-6 py-3 rounded-lg transition-all transform hover:scale-105 shadow-lg ${darkMode ? 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white' : 'bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white'}`}
+                      >
+                        <Mail />
+                        <span>Email Me</span>
+                      </a>
+                      <a
+                        href="https://github.com/Tanish287"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`flex items-center gap-2 px-6 py-3 rounded-lg transition-all transform hover:scale-105 shadow-lg ${darkMode ? 'bg-gradient-to-r from-slate-700 to-slate-800 hover:from-slate-800 hover:to-slate-900 text-white' : 'bg-gradient-to-r from-slate-700 to-slate-800 hover:from-slate-800 hover:to-slate-900 text-white'}`}
+                      >
+                        <Github />
+                        <span>GitHub</span>
+                      </a>
+                      <a
+                        href="https://www.linkedin.com/in/tanish-mattoo-313377253/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`flex items-center gap-2 px-6 py-3 rounded-lg transition-all transform hover:scale-105 shadow-lg ${darkMode ? 'bg-gradient-to-r from-blue-700 to-indigo-700 hover:from-blue-800 hover:to-indigo-800 text-white' : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white'}`}
+                      >
+                        <Linkedin />
+                        <span>LinkedIn</span>
+                      </a>
+                    </div>
+
+                    <div className={`flex items-center justify-center gap-2 ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>
+                      <MapPin />
+                      <span>Greater Noida, India</span>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* About Section */}
+              <section id="about" className={`py-16 px-4 sm:px-6 lg:px-8 ${darkMode ? 'bg-slate-800/50' : 'bg-white/80'} backdrop-blur-sm`}>
+                <div className="max-w-6xl mx-auto">
+                  <h2 className={`text-4xl font-bold mb-8 text-center bg-gradient-to-r ${darkMode ? 'from-blue-400 to-purple-400' : 'from-blue-600 to-purple-600'} bg-clip-text text-transparent`}>
+                    About Me
+                  </h2>
+                  <div className={`rounded-2xl p-8 shadow-xl backdrop-blur-sm border transition-all hover:shadow-2xl ${darkMode ? 'bg-slate-700/50 border-slate-600' : 'bg-gradient-to-br from-blue-50 to-purple-50 border-slate-200'}`}>
+                    <p className={`text-lg leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
+                      I am currently in my 7th semester pursuing B.Tech in Computer Science Engineering at Jaypee University of Information Technology, Solan, 
+                      with an expected graduation in 2026. My journey in tech has been driven by curiosity and a passion for building practical solutions. 
+                      I believe in learning through doing, which is why I've invested time in developing real-world projects that solve actual problems. 
+                      My focus areas include web development, data analysis, and creating user-friendly applications that make a difference.
+                    </p>
+                  </div>
+                </div>
+              </section>
+
+              {/* Skills Section */}
+              <section id="skills" className="py-16 px-4 sm:px-6 lg:px-8">
+                <div className="max-w-6xl mx-auto">
+                  <h2 className={`text-4xl font-bold mb-12 text-center bg-gradient-to-r ${darkMode ? 'from-blue-400 to-purple-400' : 'from-blue-600 to-purple-600'} bg-clip-text text-transparent`}>
+                    Technical Skills
+                  </h2>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <SkillCard title="Programming Languages" skills={['C++', 'Python', 'JavaScript']} darkMode={darkMode} />
+                    <SkillCard title="Web Technologies" skills={['HTML', 'CSS', 'React', 'Node.js']} darkMode={darkMode} />
+                    <SkillCard title="Databases" skills={['MySQL', 'MongoDB', 'Firebase']} darkMode={darkMode} />
+                    <SkillCard title="Tools & Technologies" skills={['Git', 'VS Code', 'Power BI', 'SQL']} darkMode={darkMode} />
+                  </div>
+                </div>
+              </section>
+
+              {/* Projects Section */}
+              <section id="projects" className={`py-16 px-4 sm:px-6 lg:px-8 ${darkMode ? 'bg-slate-800/50' : 'bg-white/80'} backdrop-blur-sm`}>
+                <div className="max-w-6xl mx-auto">
+                  <h2 className={`text-4xl font-bold mb-12 text-center bg-gradient-to-r ${darkMode ? 'from-blue-400 to-purple-400' : 'from-blue-600 to-purple-600'} bg-clip-text text-transparent`}>
+                    Projects
+                  </h2>
+                  <div className="space-y-8">
+                    <ProjectCard
+                      title="COVID-19 Data Analysis and Visualization"
+                      description="A comprehensive data analysis project exploring COVID-19 trends using structured datasets. Features data cleaning and analysis using Python and SQL, with interactive Power BI dashboards visualizing case growth, recoveries, and regional comparisons. Presents complex pandemic data in a clear, decision-friendly format."
+                      tags={['Python', 'SQL', 'Power BI', 'Data Analysis']}
+                      type="Minor Project"
+                      darkMode={darkMode}
+                    />
+                    <ProjectCard
+                      title="SES – Smart Energy System"
+                      description="A web-based application designed to monitor and manage energy usage efficiently. Features a responsive user interface and implements core functionality for tracking energy consumption data. Emphasizes practical web development concepts, modular code structure, and real-world problem solving in energy management systems."
+                      tags={['React', 'Web Development', 'Energy Management']}
+                      type="Internship Project"
+                      darkMode={darkMode}
+                    />
+                  </div>
+                </div>
+              </section>
+
+              {/* Education Section */}
+              <section id="education" className="py-16 px-4 sm:px-6 lg:px-8">
+                <div className="max-w-6xl mx-auto">
+                  <h2 className={`text-4xl font-bold mb-12 text-center bg-gradient-to-r ${darkMode ? 'from-blue-400 to-purple-400' : 'from-blue-600 to-purple-600'} bg-clip-text text-transparent`}>
+                    Education
+                  </h2>
+                  <div className="space-y-6">
+                    <EducationCard
+                      degree="Bachelor of Technology in Computer Science Engineering"
+                      institution="Jaypee University of Information Technology, Solan"
+                      year="2022 - 2026 (Expected)"
+                      grade="CGPA: 7.58"
+                      darkMode={darkMode}
+                    />
+                    <EducationCard
+                      degree="12th Grade (Senior Secondary)"
+                      year="2022"
+                      grade="86%"
+                      darkMode={darkMode}
+                    />
+                    <EducationCard
+                      degree="10th Grade (Secondary)"
+                      year="2020"
+                      grade="87%"
+                      darkMode={darkMode}
+                    />
+                  </div>
+                </div>
+              </section>
+
+              {/* Experience Section */}
+              <section id="experience" className={`py-16 px-4 sm:px-6 lg:px-8 ${darkMode ? 'bg-slate-800/50' : 'bg-white/80'} backdrop-blur-sm`}>
+                <div className="max-w-6xl mx-auto">
+                  <h2 className={`text-4xl font-bold mb-12 text-center bg-gradient-to-r ${darkMode ? 'from-blue-400 to-purple-400' : 'from-blue-600 to-purple-600'} bg-clip-text text-transparent`}>
+                    Experience
+                  </h2>
+                  <div className="space-y-6">
+                    <ExperienceCard
+                      title="Web Development Intern"
+                      organization="SES Project"
+                      duration="2 months"
+                      description="Developed a Smart Energy System web application focused on monitoring and managing energy usage. Designed responsive UI and implemented core functionality for energy consumption tracking."
+                      darkMode={darkMode}
+                    />
+                    <ExperienceCard
+                      title="Coordinator - Registration and Hospitality Committee"
+                      organization="Jaypee University of Information Technology"
+                      duration="2024 - 2025"
+                      description="Leading registration and hospitality operations for college events, managing teams and ensuring smooth execution of university activities."
+                      darkMode={darkMode}
+                    />
+                    <ExperienceCard
+                      title="Member - Sports Club"
+                      organization="Jaypee University of Information Technology"
+                      duration="2022 - 2024"
+                      description="Active member of the sports club, participating in organizing and coordinating sports events and activities."
+                      darkMode={darkMode}
+                    />
+                  </div>
+                </div>
+              </section>
+
+              {/* Footer */}
+              <footer className={`py-8 px-4 ${darkMode ? 'bg-slate-900 border-t border-slate-700' : 'bg-slate-800'} text-white`}>
+                <div className="max-w-6xl mx-auto text-center">
+                  <p className="mb-4 text-lg">Let's connect and build something amazing together!</p>
+                  <div className="flex justify-center gap-6 mb-6">
+                    <a href="mailto:tanishmattoo7@gmail.com" className="hover:text-blue-400 transition-all transform hover:scale-110 text-3xl">
+                      <Mail />
+                    </a>
+                    <a href="https://github.com/Tanish287" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-all transform hover:scale-110 text-3xl">
+                      <Github />
+                    </a>
+                    <a href="https://www.linkedin.com/in/tanish-mattoo-313377253/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-all transform hover:scale-110 text-3xl">
+                      <Linkedin />
+                    </a>
+                  </div>
+                  <p className={`text-sm ${darkMode ? 'text-slate-400' : 'text-slate-300'}`}>© 2024 Tanish Mattoo. All rights reserved.</p>
+                </div>
+              </footer>
+            </div>
+          );
+        }
+
+        function SkillCard({ title, skills, darkMode }) {
+          return (
+            <div className={`rounded-xl p-6 shadow-xl transition-all hover:shadow-2xl transform hover:-translate-y-1 border ${darkMode ? 'bg-slate-700/50 border-slate-600 backdrop-blur-sm' : 'bg-white border-slate-200'}`}>
+              <h3 className={`text-xl font-semibold mb-4 flex items-center gap-2 ${darkMode ? 'text-slate-100' : 'text-slate-800'}`}>
+                <Code size={24} />
+                {title}
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {skills.map((skill, index) => (
+                  <span
+                    key={index}
+                    className={`px-3 py-1 rounded-full text-sm font-medium transition-all hover:scale-105 ${darkMode ? 'bg-blue-900/50 text-blue-300 border border-blue-700' : 'bg-blue-100 text-blue-700'}`}
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+          );
+        }
+
+        function ProjectCard({ title, description, tags, type, darkMode }) {
+          return (
+            <div className={`rounded-xl p-8 shadow-xl transition-all hover:shadow-2xl transform hover:-translate-y-1 border ${darkMode ? 'bg-slate-700/50 border-slate-600 backdrop-blur-sm' : 'bg-gradient-to-br from-blue-50 to-purple-50 border-slate-200'}`}>
+              <div className="flex items-start justify-between mb-3 flex-wrap gap-2">
+                <h3 className={`text-2xl font-semibold ${darkMode ? 'text-slate-100' : 'text-slate-800'}`}>{title}</h3>
+                <span className={`px-3 py-1 text-sm rounded-full font-medium ${darkMode ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white' : 'bg-gradient-to-r from-blue-500 to-purple-500 text-white'}`}>
+                  {type}
+                </span>
+              </div>
+              <p className={`mb-4 leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>{description}</p>
+              <div className="flex flex-wrap gap-2">
+                {tags.map((tag, index) => (
+                  <span
+                    key={index}
+                    className={`px-3 py-1 rounded-md text-sm border transition-all hover:scale-105 ${darkMode ? 'bg-slate-600/50 text-slate-200 border-slate-500' : 'bg-white text-slate-700 border-slate-200'}`}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          );
+        }
+
+        function EducationCard({ degree, institution, year, grade, darkMode }) {
+          return (
+            <div className={`rounded-xl p-6 shadow-xl transition-all hover:shadow-2xl transform hover:-translate-y-1 border ${darkMode ? 'bg-slate-700/50 border-slate-600 backdrop-blur-sm' : 'bg-white border-slate-200'}`}>
+              <div className="flex items-start gap-4">
+                <div className={`p-3 rounded-lg ${darkMode ? 'bg-blue-900/50' : 'bg-blue-100'}`}>
+                  <GraduationCap size={28} />
+                </div>
+                <div className="flex-1">
+                  <h3 className={`text-xl font-semibold mb-1 ${darkMode ? 'text-slate-100' : 'text-slate-800'}`}>{degree}</h3>
+                  {institution && <p className={`mb-2 ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>{institution}</p>}
+                  <div className={`flex flex-wrap gap-4 text-sm ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                    <span>{year}</span>
+                    <span className={`font-semibold ${darkMode ? 'text-blue-400' : 'text-blue-600'}`}>{grade}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        }
+
+        function ExperienceCard({ title, organization, duration, description, darkMode }) {
+          return (
+            <div className={`rounded-xl p-6 shadow-xl transition-all hover:shadow-2xl transform hover:-translate-y-1 border ${darkMode ? 'bg-slate-700/50 border-slate-600 backdrop-blur-sm' : 'bg-gradient-to-br from-blue-50 to-purple-50 border-slate-200'}`}>
+              <div className="flex items-start gap-4">
+                <div className={`p-3 rounded-lg ${darkMode ? 'bg-blue-900/50' : 'bg-blue-100'}`}>
+                  <Briefcase size={28} />
+                </div>
+                <div className="flex-1">
+                  <h3 className={`text-xl font-semibold mb-1 ${darkMode ? 'text-slate-100' : 'text-slate-800'}`}>{title}</h3>
+                  <p className={`mb-2 ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>{organization}</p>
+                  <p className={`text-sm mb-3 ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>{duration}</p>
+                  <p className={`leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>{description}</p>
+                </div>
+              </div>
+            </div>
+          );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<Portfolio />);
+    </script>
+</body>
+</html>
